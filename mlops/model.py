@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.linear_model import LogisticRegression
 
+from mlops.schemas.iris import IrisInput
 
 class IrisClassifier:
     def __init__(self):
@@ -19,7 +20,12 @@ class IrisClassifier:
                                   multi_class='multinomial').fit(self.X, self.y)
 
     def classify_iris(self, features: dict):
-        X = [features['sepal_l'], features['sepal_w'], features['petal_l'], features['petal_w']]
-        prediction = self.clf.predict_proba([X])
+        X = IrisInput(**features)
+        
+        prediction = self.clf.predict_proba([[X.sepal_l, X.sepal_w, X.petal_l, X.petal_w]])
         return {'class': self.iris_type[np.argmax(prediction)],
                 'probability': round(max(prediction[0]), 2)}
+
+
+if __name__ == "__main__":
+    pass
