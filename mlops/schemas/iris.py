@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class IrisInput(BaseModel):
     sepal_l: float
     sepal_w: float
@@ -8,4 +9,3 @@ class IrisInput(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
-    
