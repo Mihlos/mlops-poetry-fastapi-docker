@@ -11,6 +11,7 @@ numpy = "^1.21.2"
 fastapi = "^0.68.0"
 uvicorn = "^0.15.0"
 pydantic = "^1.8.2"
+joblib = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

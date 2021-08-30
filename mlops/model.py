@@ -1,5 +1,5 @@
 import numpy as np
-import pickle
+import joblib
 from sklearn.datasets import load_iris
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -27,10 +27,21 @@ class IrisClassifier:
         }
 
     def save_model(self):
-        with open("model.pkl", "wb") as model:
-            pickle.dump(self.clf, model)
+        joblib.dump(self.clf, "model.pkl")
+
+    def load_model(self):
+        return joblib.load("model.pkl")
 
 
 if __name__ == "__main__":
+
+    """
+    Just to save the model and testing.
+    """
     model = IrisClassifier()
     model.save_model()
+    model.load_model()
+    prediction = model.classify_iris(
+        {"sepal_l": 1.1, "sepal_w": 2.1, "petal_l": 3.1, "petal_w": 4.1}
+    )
+    print(prediction)
