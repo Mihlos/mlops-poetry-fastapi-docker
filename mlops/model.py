@@ -10,7 +10,7 @@ class IrisClassifier:
         self.iris_type = {0: "setosa", 1: "versicolor", 2: "virginica"}
 
     def load_model(self):
-        joblib.load("model.pkl")
+        return joblib.load("model.pickle")
 
     def classify_iris(self, features: dict):
         X = IrisInput(**features)
