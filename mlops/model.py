@@ -1,5 +1,5 @@
 import numpy as np
-import pickle
+import joblib
 
 from mlops.schemas.iris import IrisInput
 
@@ -11,7 +11,7 @@ class IrisClassifier:
 
     def load_model(self):
         with open("model.pkl") as model:
-            pickle.load(model)
+            joblib.load(model)
 
     def classify_iris(self, features: dict):
         X = IrisInput(**features)
@@ -26,5 +26,10 @@ class IrisClassifier:
 
 
 if __name__ == "__main__":
+
+    """
+    Just for testing purposes.
+    """
+
     model = IrisClassifier()
     print(model.clf)
