@@ -27,10 +27,10 @@ class IrisClassifier:
         }
 
     def save_model(self):
-        joblib.dump(self.clf, "model.pkl")
+        joblib.dump(self.clf, "model.pickle")
 
     def load_model(self):
-        return joblib.load("model.pkl")
+        return joblib.load("model.pickle")
 
 
 if __name__ == "__main__":
@@ -38,10 +38,14 @@ if __name__ == "__main__":
     """
     Just to save the model and testing.
     """
+
     model = IrisClassifier()
     model.save_model()
-    model.load_model()
-    prediction = model.classify_iris(
-        {"sepal_l": 1.1, "sepal_w": 2.1, "petal_l": 3.1, "petal_w": 4.1}
+    print(
+        model.classify_iris(
+            {"sepal_l": 1.1, "sepal_w": 2.1, "petal_l": 3.1, "petal_w": 4.1}
+        )
     )
-    print(prediction)
+
+    knn = model.load_model()
+    print(knn.predict_proba([[1.1, 2.1, 3.1, 4.1]]))
