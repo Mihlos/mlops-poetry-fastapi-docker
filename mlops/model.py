@@ -1,6 +1,7 @@
 import numpy as np
+import pickle
 from sklearn.datasets import load_iris
-from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 
 from mlops.schemas.iris import IrisInput
 
@@ -11,10 +12,8 @@ class IrisClassifier:
         self.clf = self.train_model()
         self.iris_type = {0: "setosa", 1: "versicolor", 2: "virginica"}
 
-    def train_model(self) -> LogisticRegression:
-        return LogisticRegression(
-            solver="lbfgs", max_iter=1000, multi_class="multinomial"
-        ).fit(self.X, self.y)
+    def train_model(self) -> KNeighborsClassifier:
+        return KNeighborsClassifier(n_neighbors=3).fit(self.X, self.y)
 
     def classify_iris(self, features: dict):
         X = IrisInput(**features)
@@ -27,6 +26,11 @@ class IrisClassifier:
             "probability": round(max(prediction[0]), 2),
         }
 
+    def save_model(self):
+        with open("model.pkl", "wb") as model:
+            pickle.dump(self.clf, model)
+
 
 if __name__ == "__main__":
-    pass
+    model = IrisClassifier()
+    model.save_model()
