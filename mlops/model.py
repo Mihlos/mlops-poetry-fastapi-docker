@@ -31,4 +31,7 @@ if __name__ == "__main__":
     """
 
     model = IrisClassifier()
-    print(model.clf)
+    prediction = model.classify_iris(
+        {"sepal_l": 1.1, "sepal_w": 2.1, "petal_l": 3.1, "petal_w": 4.1}
+    )
+    print(prediction)
