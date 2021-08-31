@@ -7,5 +7,7 @@ class IrisInput(BaseModel):
     petal_l: float
     petal_w: float
 
-    class Config:
-        allow_population_by_field_name = True
+
+class IrisResponse(BaseModel):
+    type: str
+    probability: float

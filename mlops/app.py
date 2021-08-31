@@ -1,10 +1,18 @@
 from fastapi import FastAPI
-from mlops.routers import routers
+from pydantic.tools import T
+from mlops.routers import iris
 
 app = FastAPI()
-app.include_router(routers.router, prefix="/iris")
+app.include_router(iris.router, prefix="/iris")
+
+tags = ["test"]
 
 
-@app.get("/healthcheck", status_code=200)
+@app.get("/", tags=tags)
+async def root():
+    return {"message": "Hello World"}
+
+
+@app.get("/healthcheck", tags=tags, status_code=200)
 async def healthcheck():
-    return "Iris classifier is all ready to go!"
+    return {"message": "Iris classifier is all ready to go!"}

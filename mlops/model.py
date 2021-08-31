@@ -1,7 +1,7 @@
 import numpy as np
 import joblib
 
-from mlops.schemas.iris import IrisInput
+from mlops.schemas.iris import IrisInput, IrisResponse
 
 
 class IrisClassifier:
@@ -10,18 +10,30 @@ class IrisClassifier:
         self.iris_type = {0: "setosa", 1: "versicolor", 2: "virginica"}
 
     def load_model(self):
+
+        """
+        Loads a provided model in pickle format.
+
+        Returns:
+            The trained model.
+        """
         return joblib.load("model.pickle")
 
-    def classify_iris(self, features: dict):
-        X = IrisInput(**features)
+    def classify_iris(self, features: IrisInput) -> dict:
 
+        """
+        Runs the predict method of the model giving the results.
+
+        Returns:
+            IrisResponse: Type and probability.
+        """
         prediction = self.clf.predict_proba(
-            [[X.sepal_l, X.sepal_w, X.petal_l, X.petal_w]]
+            [[features.sepal_l, features.sepal_w, features.petal_l, features.petal_w]]
         )
-        return {
-            "class": self.iris_type[np.argmax(prediction)],
-            "probability": round(max(prediction[0]), 2),
-        }
+        return IrisResponse(
+            type=self.iris_type[np.argmax(prediction)],
+            probability=round(max(prediction[0]), 2),
+        )
 
 
 if __name__ == "__main__":
