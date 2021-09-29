@@ -1,3 +1,4 @@
+from pathlib import Path
 import numpy as np
 import joblib
 
@@ -17,7 +18,11 @@ class IrisClassifier:
         Returns:
             The trained model.
         """
-        return joblib.load("model.pickle")
+
+        cwd = Path.cwd()
+        model_path = cwd / "mlops" / "model.pickle"
+
+        return joblib.load(model_path)
 
     def classify_iris(self, features: IrisInput) -> dict:
 

@@ -28,7 +28,7 @@ FROM python-base as builder-base
 RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
-RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 
 # copy project requirement files here to ensure they will be cached.
 WORKDIR $PYSETUP_PATH
@@ -40,6 +40,7 @@ RUN poetry install --no-dev
 ###############################################
 # Production Image
 ###############################################
+
 FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 COPY ./mlops /mlops/
